@@ -18,18 +18,42 @@ function App({ tasks }) {
     setTaskItems([...taskItems, newTask]);
   };
 
+  // mark task completed
+  const toggleTaskCompleted = (id) => {
+    const updatedTasks = taskItems.map((task) => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        // use object spread to make a new object
+        // whose `completed` prop has been inverted
+        return { ...task, completed: !task.completed };
+      }
+      return task;
+    });
+    setTaskItems(updatedTasks);
+    console.log(taskItems);
+  };
+
+  // delete task
+  const deleteTask = (id) => {
+    // console.log(id);
+    const remainingTasks = taskItems.filter((task) => id !== task.id);
+    setTaskItems(remainingTasks);
+  };
+
   const taskList = taskItems.map((task) => (
     <Todo
       id={task.id}
       name={task.name}
       completed={task.completed}
       key={task.id}
+      toggleTaskCompleted={toggleTaskCompleted}
+      deleteTask={deleteTask}
     />
   ));
 
   // counting tasks
   const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
-  const headingText = `${taskList.length} tasks remaining`;
+  const headingText = `${taskList.length} ${tasksNoun} remaining`;
 
   return (
     <div className="todoapp stack-large">
