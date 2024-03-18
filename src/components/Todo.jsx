@@ -19,7 +19,11 @@ const Todo = ({
         <input id={id} className="todo-text" type="text" />
       </div>
       <div className="btn-group">
-        <button type="button" className="btn todo-cancel">
+        <button
+          type="button"
+          className="btn todo-cancel"
+          onClick={() => setEditing(false)}
+        >
           Cancel
           <span className="visually-hidden">renaming {name}</span>
         </button>
@@ -45,7 +49,7 @@ const Todo = ({
         </label>
       </div>
       <div className="btn-group">
-        <button type="button" className="btn">
+        <button type="button" className="btn" onClick={() => setEditing(true)}>
           Edit <span className="visually-hidden">{name}</span>
         </button>
         <button
