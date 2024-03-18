@@ -9,14 +9,35 @@ const Todo = ({
   editTask,
 }) => {
   const [isEditing, setEditing] = useState(false);
+  const [newName, setNewName] = useState("");
+
+  // edit the todo
+  const handleChange = (event) => {
+    setNewName(event.target.value);
+  };
+
+  // submit edit the todo
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    {
+      editTask(id, newName);
+    }
+    setNewName("");
+    setEditing(false);
+  };
 
   const editingTemplate = (
-    <form className="stack-small">
+    <form onSubmit={handleSubmit} className="stack-small">
       <div className="form-group">
         <label className="todo-label" htmlFor={id}>
           New name for {name}
         </label>
-        <input id={id} className="todo-text" type="text" />
+        <input
+          id={id}
+          className="todo-text"
+          type="text"
+          onChange={handleChange}
+        />
       </div>
       <div className="btn-group">
         <button
