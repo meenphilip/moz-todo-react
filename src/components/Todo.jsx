@@ -1,7 +1,38 @@
-/* eslint-disable react/prop-types */
-const Todo = ({ name, id, completed, toggleTaskCompleted, deleteTask }) => {
-  return (
-    <li className="todo stack-small">
+import { useState } from "react";
+
+const Todo = ({
+  name,
+  id,
+  completed,
+  toggleTaskCompleted,
+  deleteTask,
+  editTask,
+}) => {
+  const [isEditing, setEditing] = useState(false);
+
+  const editingTemplate = (
+    <form className="stack-small">
+      <div className="form-group">
+        <label className="todo-label" htmlFor={id}>
+          New name for {name}
+        </label>
+        <input id={id} className="todo-text" type="text" />
+      </div>
+      <div className="btn-group">
+        <button type="button" className="btn todo-cancel">
+          Cancel
+          <span className="visually-hidden">renaming {name}</span>
+        </button>
+        <button type="submit" className="btn btn__primary todo-edit">
+          Save
+          <span className="visually-hidden">new name for {name}</span>
+        </button>
+      </div>
+    </form>
+  );
+
+  const viewTemplate = (
+    <div className="stack-small">
       <div className="c-cb">
         <input
           id={id}
@@ -15,14 +46,20 @@ const Todo = ({ name, id, completed, toggleTaskCompleted, deleteTask }) => {
       </div>
       <div className="btn-group">
         <button type="button" className="btn">
-          Edit <span className="visually-hidden"> {name}</span>
+          Edit <span className="visually-hidden">{name}</span>
         </button>
-        <button type="button" className="btn btn__danger" onClick={() => deleteTask(id)}>
-          Delete <span className="visually-hidden"> {name}</span>
+        <button
+          type="button"
+          className="btn btn__danger"
+          onClick={() => deleteTask(id)}
+        >
+          Delete <span className="visually-hidden">{name}</span>
         </button>
       </div>
-    </li>
+    </div>
   );
+
+  return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
 };
 
 export default Todo;

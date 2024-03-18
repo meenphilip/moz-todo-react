@@ -30,7 +30,6 @@ function App({ tasks }) {
       return task;
     });
     setTaskItems(updatedTasks);
-    console.log(taskItems);
   };
 
   // delete task
@@ -38,6 +37,20 @@ function App({ tasks }) {
     // console.log(id);
     const remainingTasks = taskItems.filter((task) => id !== task.id);
     setTaskItems(remainingTasks);
+  };
+
+  // Edit Task
+  const editTask = (id, newName) => {
+    const editedTaskList = taskItems.map((task) => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        // Copy the task and update its name
+        return { ...task, name: newName };
+      }
+      // Return the original task if it's not the edited task
+      return task;
+    });
+    setTaskItems(editedTaskList);
   };
 
   const taskList = taskItems.map((task) => (
@@ -48,6 +61,7 @@ function App({ tasks }) {
       key={task.id}
       toggleTaskCompleted={toggleTaskCompleted}
       deleteTask={deleteTask}
+      editTask={editTask}
     />
   ));
 
